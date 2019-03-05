@@ -1,0 +1,3 @@
+fxDockerImage(
+  image: 'keycloak-gatekeeper'
+)

@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -ex
+
+apk add --no-cache \
+  ca-certificates=${CA_CERTIFICATES_VERSION}
+
+apk add --no-cache \
+  curl \
+  tar
+
+curl -fssL \
+  "https://downloads.jboss.org/keycloak/${KEYCLOAK_GATEKEEPER_VERSION}/gatekeeper/keycloak-gatekeeper-${GOOS}-${GOARCH}.tar.gz" \
+  -o /resources/keycloak-gatekeeper.tar.gz
+
+tar -xzf /resources/keycloak-gatekeeper.tar.gz
+
+mkdir -p /opt/keycloak/gatekeeper/bin
+
+mv ./keycloak-gatekeeper /opt/keycloak/gatekeeper/bin
+
+chmod +x /opt/keycloak/gatekeeper/bin/keycloak-gatekeeper
+
+ln -s /opt/keycloak/gatekeeper/bin/keycloak-gatekeeper /bin/keycloak-gatekeeper
+
+apk del --no-cache \
+  curl \
+  tar
+
+addgroup  -S keycloak
+adduser -S -D -H gatekeeper
