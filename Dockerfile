@@ -13,9 +13,11 @@ ADD ./resources /resources
 
 RUN /resources/build && rm -rf /resources
 
+VOLUME /opt/keycloak/gatekeeper/conf.d
+
 USER gatekeeper
 
-ENTRYPOINT ["keycloak-gatekeeper"]
+ENTRYPOINT ["keycloak-gatekeeper", "--config", "/opt/keycloak/gatekeeper/conf.d/gatekeeper.yaml"]
 
 LABEL "maintainer"="cloudsquad@fxinnovation.com" \
       "org.label-schema.name"="keycloak-gatekeeper" \
@@ -31,4 +33,4 @@ LABEL "maintainer"="cloudsquad@fxinnovation.com" \
       "org.label-schema.vcs-ref"=$VCS_REF \
       "org.label-schema.version"=$VERSION \
       "org.label-schema.build-date"=$BUILD_DATE \
-      "org.label-schema.usage"="Please read README.md"
+      "org.label-schema.usage"="docker run -v [PATH_TO_CONFIG]:/opt/keycloak/gatekeeper/conf.d fxinnovation/keycloak-gatekeeper:${VERSION}"

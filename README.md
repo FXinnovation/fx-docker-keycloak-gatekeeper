@@ -7,10 +7,15 @@ We do NOT push a `latest` tag for this image. You should always pin a specific v
 
 ## Usage
 ```
-docker run -d -v [PATH_TO_CONFIG]:/data/gatekeeper.yaml fxinnovation/keycloak-gatekeeper:[TAG] --config /data/gatekeeper.yaml
+docker run -d  \
+  -v [PATH_TO_CONFIG]:/opt/keycloak/gatekeeper/conf.d \
+  fxinnovation/keycloak-gatekeeper:[TAG]
 ```
 
 Please refer to [keycloak-gatekeeper](https://www.keycloak.org/docs/latest/securing_apps/index.html#_keycloak_generic_adapter) documentation to know what to put in the configuration file.
+
+### Kubernetes
+For kubernetes, we suggest you mount the configuration under the form of a configmap.
 
 ## Labels
 We set labels on our images with additional information on the image. we follow the guidelines defined at http://label-schema.org/. Visit their website for more information about those labels.
